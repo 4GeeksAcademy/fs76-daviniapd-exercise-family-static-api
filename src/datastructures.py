@@ -57,11 +57,12 @@ class FamilyStructure:
         return new_member
 
     def delete_member(self, id):
-        original_count = len(self._members)
-        self._members = [member for member in self._members if member["id"] != id]
-        if len(self._members) < original_count:
-            return {"message": "Member deleted successfully."}
-        return {"message": "Member not found."}, 404
+        for member in self._members:
+            if member["id"] == id:
+                self._members.remove(member)
+                return True
+            
+        return False
 
     def get_member(self, id):
         for member in self._members:

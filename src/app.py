@@ -61,10 +61,11 @@ def get_member(id):
 
 @app.route('/member/<int:id>', methods=['DELETE'])
 def delete_member(id):
-    result = jackson_family.delete_member(id)
-    if "message" in result and result["message"] == "Member deleted successfully":
+    member_to_delete = jackson_family.delete_member(id)
+    if member_to_delete:
         return jsonify({"done": True}), 200
-    return jsonify({"done": False}), 404
+    else:
+        return jsonify({"msg": "Member not found"}), 404
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
